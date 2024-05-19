@@ -20,3 +20,21 @@ async function getToken(domain, client_id, client_secret, audience) {
     }
 }
 
+async function changePassword(domain, token, userId, newPassword) {
+    const options = {
+        method: 'PATCH',
+        url: `https://${domain}/api/v2/users/${userId}`,
+        headers: {
+          'content-type': 'application/json',
+          authorization: `Bearer ${token}`,
+        },
+        data: {password: newPassword, connection: 'Username-Password-Authentication'}
+      };
+    try {
+        const response = await axios(options);
+        return response.data;
+    } catch (error) {
+        console.error('Error changing password:', error.response ? error.response.data : error.message);
+    }
+}
+
