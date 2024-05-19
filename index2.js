@@ -60,3 +60,34 @@ async function getUserTokens(domain, audience, client_id, client_secret, usernam
     }
 }
 
+(async () => {
+    try {
+        const domain = 'dev-7sfm4dwi0agzg42e.us.auth0.com';
+        const client_id = '2rt9zMZergxHgi7SqMDSo2nBLXw2gHV3';
+        const client_secret = 'UhwrkkaOHZ8jLwirvoivMAG8n1AeEe6NfI1itImdyjEbAzsygoo0Pjizl_HuYRD6';
+        const audience = 'https://dev-7sfm4dwi0agzg42e.us.auth0.com/api/v2/';
+        
+        const email = 'alshop2004@gmail.com';
+        const password = '#Aa12345678';
+        const user_id = 'auth0|6648cabccddc69d8a11db8d4';
+
+        //Створюємо токен
+        const tokenData = await getToken(domain,client_id, client_secret, audience);
+        //console.log(tokenData);
+
+        //Міняємо пароль
+        const res = await changePassword(domain, tokenData.access_token, user_id, password + 'a');
+        //console.log(res);
+
+        //Спробуємо створити юзер токен зі старим паролем
+        const userToken1 = await getUserTokens(domain, audience, client_id, client_secret, email, password);
+        console.log(userToken1);
+
+        //Спробуємо створити юзер токен з новим паролем
+        const userToken2 = await getUserTokens(domain, audience, client_id, client_secret, email, password+'a');
+        console.log(userToken2);
+
+    } catch (error) {
+      console.error('Operation failed:', error);
+    }
+  })();
