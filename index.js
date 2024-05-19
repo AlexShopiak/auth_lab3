@@ -44,4 +44,28 @@ async function getRefreshedToken(domain, client_id, client_secret, refresh_token
   }
 }
 
+(async () => {
+  try {
+      //Налаштування
+      const domain = 'dev-7sfm4dwi0agzg42e.us.auth0.com';
+      const client_id = '2rt9zMZergxHgi7SqMDSo2nBLXw2gHV3';
+      const client_secret = 'UhwrkkaOHZ8jLwirvoivMAG8n1AeEe6NfI1itImdyjEbAzsygoo0Pjizl_HuYRD6';
+      const audience = 'https://dev-7sfm4dwi0agzg42e.us.auth0.com/api/v2/';
+      
+      const email = 'alshop2004@gmail.com';
+      const password = '#Aa12345678';
 
+      //Отримати токени
+      const data = await getUserTokens(domain, audience, client_id, client_secret, email, password);
+      console.log(data);
+
+      //Відібрати refresh_token
+      const refreshToken = data.refresh_token;
+
+      //Отримати оновлений токен
+      const refreshedToken = await getRefreshedToken(domain, client_id, client_secret, refreshToken);
+      console.log(refreshedToken);
+  } catch (error) {
+    console.error('Operation failed:', error);
+  }
+})();
