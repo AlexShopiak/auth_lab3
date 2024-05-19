@@ -46,6 +46,7 @@ async function getUserTokens(domain, audience, client_id, client_secret, usernam
       client_secret: client_secret,
       username: username,
       password: password,
+      scope: 'offline_access'
     };
   
     const url = `https://${domain}/oauth/token`;
