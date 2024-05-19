@@ -24,3 +24,24 @@ async function getUserTokens(domain, audience, client_id, client_secret, usernam
   }
 }
 
+async function getRefreshedToken(domain, client_id, client_secret, refresh_token) {
+  const data = {
+    grant_type: 'refresh_token',
+    client_id : client_id,
+    client_secret : client_secret,
+    refresh_token : refresh_token,
+  };
+
+  const url = 'https://' + domain +'/oauth/token';
+
+  try {
+    const response = await axios.post(url, data, {
+      headers: {'content-type': 'application/x-www-form-urlencoded'}
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error refreshing token:', error.response ? error.response.data : error.message);
+  }
+}
+
+
